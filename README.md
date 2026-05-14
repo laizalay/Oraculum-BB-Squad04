@@ -259,7 +259,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/squad04-riseup/oraculum-bb.git
+git clone https://github.com/laizalay/Oraculum-BB-Squad04.git
 cd oraculum-bb/frontend
 
 # 2. Instale as dependências
