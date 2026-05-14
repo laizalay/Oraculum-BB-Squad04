@@ -40,10 +40,8 @@ Antes de qualquer coisa, verifique se você tem instalado:
 Abra o **Git Bash** (clique com o botão direito em qualquer pasta → "Git Bash Here") e digite:
 
 ```bash
-git clone https://github.com/SEU_USUARIO/oraculum-bb.git
+git clone https://github.com/laizalay/Oraculum-BB-Squad04
 ```
-
-> 🔁 Substitua `SEU_USUARIO` pelo usuário real do GitHub onde está o repositório.
 
 Depois entre na pasta do projeto:
 
