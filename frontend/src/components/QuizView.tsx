@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { collection, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { useAuth } from "../context/AuthContext";
-import { Check, X, ChevronRight, Trophy, AlertTriangle, WifiOff } from "lucide-react";
+import { Check, X, ChevronRight, WifiOff } from "lucide-react";
 
 // ── TIPOS ─────────────────────────────────────────────────────────────────────
 
@@ -171,6 +171,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
           const res: Resultado = { vitoria: true, classificacao: "Senior" };
           setResultado(res);
           salvarResultado(res);
+          onBack();
           return;
         }
 
@@ -178,6 +179,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
           const res: Resultado = { vitoria: false, classificacao: "Pleno" };
           setResultado(res);
           salvarResultado(res);
+          onBack();
           return;
         }
 
@@ -200,6 +202,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
             const res: Resultado = { vitoria: false, classificacao };
             setResultado(res);
             salvarResultado(res);
+            onBack();
             return;
           }
         }
@@ -217,6 +220,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
           const res: Resultado = { vitoria: true, classificacao: "Senior" };
           setResultado(res);
           salvarResultado(res);
+          onBack();
         } else {
           setNivelAtual((n) => n + 1);
           setFaseAtual("a");
@@ -243,6 +247,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
           const res: Resultado = { vitoria: false, classificacao };
           setResultado(res);
           salvarResultado(res);
+          onBack();
           return;
         }
       }
@@ -287,74 +292,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
     processarResposta(acertou);
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // TELA DE RESULTADO FINAL
-  // ─────────────────────────────────────────────────────────────────────────
-  if (resultado) {
-    const medal = resultado.vitoria ? "🏆" : "🥈";
-    const wrongList = Object.entries(wrongByCategory)
-      .map(([cat, count]) => ({ name: cat, count }))
-      .sort((a, b) => b.count - a.count);
-
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full">
-          <div className="text-center">
-            <div className="w-20 h-20 mx-auto rounded-full bg-[#F5C518] flex items-center justify-center mb-4">
-              <Trophy className="w-10 h-10 text-[#1F3864]" />
-            </div>
-            <span className="text-5xl mb-4 block">{medal}</span>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Quiz Finalizado!</h2>
-            <div className="bg-gray-50 rounded-xl p-4 my-4">
-              <p className="text-sm text-gray-500 mb-1">Seu nível:</p>
-              <p className="text-2xl font-bold text-[#1F3864]">{resultado.classificacao}</p>
-            </div>
-            <p className="text-sm text-gray-500 mb-4">
-              {resultado.vitoria
-                ? "Parabéns! Você completou todos os níveis!"
-                : `Você foi classificado como ${resultado.classificacao}.`}
-            </p>
-          </div>
-
-          {wrongList.length > 0 ? (
-            <div className="mt-2 mb-6">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-4 h-4 text-red-500" />
-                <h3 className="font-semibold text-gray-800 text-sm">Temas para revisar</h3>
-              </div>
-              <div className="space-y-2">
-                {wrongList.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between bg-gray-50 rounded-lg p-3"
-                  >
-                    <span className="text-sm text-gray-800">{item.name}</span>
-                    <span className="text-xs font-medium text-red-500">
-                      {item.count} {item.count === 1 ? "erro" : "erros"}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="bg-green-50 rounded-xl p-4 mb-6 text-center">
-              <p className="text-sm text-green-600 font-medium">
-                🎉 Perfeito! Você não errou nenhuma questão.
-              </p>
-            </div>
-          )}
-
-          <button
-            onClick={onBack}
-            disabled={salvando}
-            className="w-full bg-[#F5C518] text-[#1F3864] font-bold py-3 rounded-lg hover:bg-yellow-400 transition disabled:opacity-60"
-          >
-            {salvando ? "Salvando..." : "Início"}
-          </button>
-        </div>
-      </div>
-    );
-  }
+  
 
   // ─────────────────────────────────────────────────────────────────────────
   // LOADING
