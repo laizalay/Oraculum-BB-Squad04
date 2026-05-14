@@ -179,7 +179,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Exibir barra ou contador de progresso | ✅ Concluído |
 | Armazenar respostas localmente durante o quiz (React state) | ✅ Concluído |
 | Buscar questões diretamente do Firestore (coleção `questions`) | ✅ Concluído |
-| Salvar respostas no Firestore ao finalizar o quiz | ⚪ Não Iniciado |
+| Salvar respostas no Firestore ao finalizar o quiz | ✅ Concluído |
 | Exibir confirmação ao sair; salvar estado parcial no localStorage | ✅ Concluído |
 | Exibir banner de aviso em caso de perda de conexão durante o quiz | ✅ Concluído |
 | Garantir mínimo de 10 questões por nível antes do lançamento | ✅ Concluído |
@@ -208,7 +208,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 |---|---|
 | Criar lógica de classificação (Nivelamento A/B) | ✅ Concluído |
 | Criar tela de resultado com exibição do nível e breakdown por tema | ⚪ Não Iniciado |
-| Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ⚪ Não Iniciado |
+| Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ✅ Concluído |
 | Criar componente visual de nível (badge/ícone por classificação) | ⚪ Não Iniciado |
 | Exibir sugestões de melhoria associadas a cada tema | ⚪ Não Iniciado |
 | Organizar temas por prioridade (maior número de erros primeiro) | ⚪ Não Iniciado |
