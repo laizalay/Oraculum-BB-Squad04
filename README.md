@@ -212,7 +212,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Criar componente visual de nível (badge/ícone por classificação) | ⚪ Não Iniciado |
 | Exibir sugestões de melhoria associadas a cada tema | ⚪ Não Iniciado |
 | Organizar temas por prioridade (maior número de erros primeiro) | ⚪ Não Iniciado |
-| Resultado salvo no histórico do usuário automaticamente | ⚪ Não Iniciado |
+| Resultado salvo no histórico do usuário automaticamente | ✅ Concluído |
 
 ---
 
