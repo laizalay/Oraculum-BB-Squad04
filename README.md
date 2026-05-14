@@ -331,8 +331,8 @@ VITE_FIREBASE_APP_ID=seu_app_id
 | EP01 — Autenticação | US01, US02 | Jean, João Santino | 🟡 Em Andamento |
 | EP01 — Autenticação | US03, US04 | Felipe, João Guilherme | 🟡 Em Andamento |
 | EP02 — Motor de Quiz | US05 | João Paulo, Ivan | 🟡 Em Andamento |
-| EP02 — Motor de Quiz | US06, US07 | Kennedy, João Paulo, Ivan | 🟡 Em Andamento |
-| EP03 — Resultado | US08 | Laiza, Kennedy | ⚪ Em Progresso |
+| EP02 — Motor de Quiz | US06, US07 | Kennedy, João Paulo, Ivan | ✅ Concluído |
+| EP03 — Resultado | US08 | Laiza, Kennedy | 🟡 Em Andamento |
 | EP04 — Dashboard | US09 | Laiza, Luís Bezerra | ⚪ Não Iniciado |
 | EP05 — UX / Home | US10 | Laiza, Luís Bezerra | ⚪ Não Iniciado |
 
