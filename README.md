@@ -179,7 +179,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Exibir barra ou contador de progresso | ✅ Concluído |
 | Armazenar respostas localmente durante o quiz (React state) | ✅ Concluído |
 | Buscar questões diretamente do Firestore (coleção `questions`) | ✅ Concluído |
-| Salvar respostas no Firestore ao finalizar o quiz | ⚪ Não Iniciado |
+| Salvar respostas no Firestore ao finalizar o quiz | ✅ Concluído |
 | Exibir confirmação ao sair; salvar estado parcial no localStorage | ✅ Concluído |
 | Exibir banner de aviso em caso de perda de conexão durante o quiz | ✅ Concluído |
 | Garantir mínimo de 10 questões por nível antes do lançamento | ✅ Concluído |
@@ -208,11 +208,11 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 |---|---|
 | Criar lógica de classificação (Nivelamento A/B) | ✅ Concluído |
 | Criar tela de resultado com exibição do nível e breakdown por tema | ⚪ Não Iniciado |
-| Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ⚪ Não Iniciado |
+| Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ✅ Concluído |
 | Criar componente visual de nível (badge/ícone por classificação) | ⚪ Não Iniciado |
 | Exibir sugestões de melhoria associadas a cada tema | ⚪ Não Iniciado |
 | Organizar temas por prioridade (maior número de erros primeiro) | ⚪ Não Iniciado |
-| Resultado salvo no histórico do usuário automaticamente | ⚪ Não Iniciado |
+| Resultado salvo no histórico do usuário automaticamente | ✅ Concluído |
 
 ---
 
@@ -259,7 +259,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/squad04-riseup/oraculum-bb.git
+git clone https://github.com/laizalay/Oraculum-BB-Squad04.git
 cd oraculum-bb/frontend
 
 # 2. Instale as dependências
@@ -331,8 +331,8 @@ VITE_FIREBASE_APP_ID=seu_app_id
 | EP01 — Autenticação | US01, US02 | Jean, João Santino | 🟡 Em Andamento |
 | EP01 — Autenticação | US03, US04 | Felipe, João Guilherme | 🟡 Em Andamento |
 | EP02 — Motor de Quiz | US05 | João Paulo, Ivan | 🟡 Em Andamento |
-| EP02 — Motor de Quiz | US06, US07 | Kennedy, João Paulo, Ivan | 🟡 Em Andamento |
-| EP03 — Resultado | US08 | Laiza, Kennedy | ⚪ Em Progresso |
+| EP02 — Motor de Quiz | US06, US07 | Kennedy, João Paulo, Ivan | ✅ Concluído |
+| EP03 — Resultado | US08 | Laiza, Kennedy | 🟡 Em Andamento |
 | EP04 — Dashboard | US09 | Laiza, Luís Bezerra | ⚪ Não Iniciado |
 | EP05 — UX / Home | US10 | Laiza, Luís Bezerra | ⚪ Não Iniciado |
 
