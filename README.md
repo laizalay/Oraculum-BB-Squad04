@@ -138,7 +138,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Criar tela de recuperação de senha | ✅ Concluído |
 | Integrar com Firebase Auth (`sendPasswordResetEmail`) | ✅ Concluído |
 | Criar feedback visual de sucesso/erro | ✅ Concluído |
-| Validar campo de e-mail no frontend | 🟡 Em Andamento |
+| Validar campo de e-mail no frontend | ✅ Concluído |
 
 ---
 
@@ -149,9 +149,9 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 |---|---|
 | Criar tela de redefinição de senha | ✅ Concluído |
 | Integrar com Firebase Auth (reset via link) | ✅ Concluído |
-| Validar token de redefinição | 🟡 Em Andamento |
-| Implementar validação de senha no frontend | 🟡 Em Andamento |
-| Redirecionar para login após sucesso | 🟡 Em Andamento |
+| Validar token de redefinição | ✅ Concluído |
+| Implementar validação de senha no frontend | ✅ Concluído |
+| Redirecionar para login após sucesso | ✅ Concluído |
 | Exibir mensagem de erro para link inválido/expirado | 🟡 Em Andamento |
 
 ---
@@ -210,8 +210,8 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Criar tela de resultado com exibição do nível e breakdown por tema | ⚪ Não Iniciado |
 | Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ✅ Concluído |
 | Criar componente visual de nível (badge/ícone por classificação) | ⚪ Não Iniciado |
-| Exibir sugestões de melhoria associadas a cada tema | ⚪ Não Iniciado |
-| Organizar temas por prioridade (maior número de erros primeiro) | ⚪ Não Iniciado |
+| Exibir sugestões de melhoria associadas a cada tema | ✅ Concluído |
+| Organizar temas por prioridade (maior número de erros primeiro) | ✅ Concluído |
 | Resultado salvo no histórico do usuário automaticamente | ✅ Concluído |
 
 ---
@@ -238,11 +238,11 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 | Task | Status |
 |---|---|
-| Criar tela Home do usuário | ⚪ Não Iniciado |
+| Criar tela Home do usuário | ✅ Concluído |
 | Integrar com dados do Firestore (resultado do quiz) | ⚪ Não Iniciado |
 | Criar componente de lista de melhorias | ⚪ Não Iniciado |
-| Criar barra de progresso | ⚪ Não Iniciado |
-| Listar principais pontos de melhoria com descrição | ⚪ Não Iniciado |
+| Criar barra de progresso | ✅ Concluído |
+| Listar principais pontos de melhoria com descrição | ✅ Concluído |
 | Layout responsivo e organizado em cards | ⚪ Não Iniciado |
 
 ---
