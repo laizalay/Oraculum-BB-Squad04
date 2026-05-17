@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await updateProfile(user, { displayName: name });
     // Força atualização do user no estado após updateProfile
     setUser({ ...user });
-    await sendEmailVerification(user);
+    
     await setDoc(doc(db, "users", user.uid), {
       name,
       email,
@@ -49,6 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       leveling_completed: false,
       createdAt: serverTimestamp(),
     });
+    await sendEmailVerification(user);
   }
 
   async function login(email: string, password: string) {
