@@ -164,7 +164,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Task | Status |
 |---|---|
 | Criar tela de onboarding | ✅ Concluído |
-| Criar componentes informativos (cards de benefícios) | ⚪ Não Iniciado |
+| Criar componentes informativos (cards de benefícios) | ✅ Concluído |
 | Integrar navegação para início do quiz | ✅ Concluído |
 | Botão único "Começar Quiz" — usuário só avança ao clicar | ✅ Concluído |
 
@@ -207,9 +207,9 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Task | Status |
 |---|---|
 | Criar lógica de classificação (Nivelamento A/B) | ✅ Concluído |
-| Criar tela de resultado com exibição do nível e breakdown por tema | ⚪ Não Iniciado |
+| Criar tela de resultado com exibição do nível e breakdown por tema | ✅ Concluído |
 | Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ✅ Concluído |
-| Criar componente visual de nível (badge/ícone por classificação) | ⚪ Não Iniciado |
+| Criar componente visual de nível (badge/ícone por classificação) | ✅ Concluído |
 | Exibir sugestões de melhoria associadas a cada tema | ✅ Concluído |
 | Organizar temas por prioridade (maior número de erros primeiro) | ✅ Concluído |
 | Resultado salvo no histórico do usuário automaticamente | ✅ Concluído |
@@ -223,11 +223,11 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 | Task | Status |
 |---|---|
-| Criar tela de dashboard exclusiva para o perfil gestor | ⚪ Não Iniciado |
-| Buscar dados agregados via Firestore (`onSnapshot()` para tempo real) | ⚪ Não Iniciado |
-| Criar componentes de gráfico (distribuição de níveis, temas críticos) | ⚪ Não Iniciado |
-| Verificar custom claim de gestor via Firebase Auth antes de exibir o dashboard | ⚪ Não Iniciado |
-| Criar aba com lista de funcionários e seus desempenhos individuais | ⚪ Não Iniciado |
+| Criar tela de dashboard exclusiva para o perfil gestor | ✅ Concluído |
+| Buscar dados agregados via Firestore (`onSnapshot()` para tempo real) | ✅ Concluído |
+| Criar componentes de gráfico (distribuição de níveis, temas críticos) | ✅ Concluído |
+| Verificar custom claim de gestor via Firebase Auth antes de exibir o dashboard | ✅ Concluído |
+| Criar aba com lista de funcionários e seus desempenhos individuais | ✅ Concluído |
 
 ---
 
@@ -239,11 +239,11 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Task | Status |
 |---|---|
 | Criar tela Home do usuário | ✅ Concluído |
-| Integrar com dados do Firestore (resultado do quiz) | ⚪ Não Iniciado |
-| Criar componente de lista de melhorias | ⚪ Não Iniciado |
+| Integrar com dados do Firestore (resultado do quiz) | ✅ Concluído |
+| Criar componente de lista de melhorias | ✅ Concluído |
 | Criar barra de progresso | ✅ Concluído |
 | Listar principais pontos de melhoria com descrição | ✅ Concluído |
-| Layout responsivo e organizado em cards | ⚪ Não Iniciado |
+| Layout responsivo e organizado em cards | ✅ Concluído |
 
 ---
 
