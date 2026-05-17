@@ -4,6 +4,7 @@
 <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
 <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" />
 <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
 
 # 🛡️ Oraculum BB
 
@@ -21,11 +22,6 @@ Residência em Software & IA — Rise Up 2026.1 · Porto Digital · Squad 04
 - [Stack Tecnológica](#-stack-tecnológica)
 - [Estrutura do Repositório](#-estrutura-do-repositório)
 - [Membros do Squad e Divisão de Tarefas](#-membros-do-squad-e-divisão-de-tarefas)
-  - [EP01 — Autenticação](#ep01--autenticação)
-  - [EP02 — Motor de Quiz](#ep02--motor-de-quiz)
-  - [EP03 — Resultado e Nível](#ep03--resultado-e-nível)
-  - [EP04 — Dashboard do Gestor](#ep04--dashboard-do-gestor)
-  - [EP05 — Acessibilidade e UX](#ep05--acessibilidade-e-ux)
 - [Como Rodar o Projeto](#-como-rodar-o-projeto)
 - [Configuração do Firebase](#-configuração-do-firebase)
 - [Variáveis de Ambiente](#-variáveis-de-ambiente)
@@ -50,55 +46,66 @@ A classificação é feita por uma lógica de nivelamento progressivo (fases A/B
 
 | Camada | Tecnologia | Responsabilidade |
 |---|---|---|
-| Frontend | React + Vite | Interface do quiz, home e telas do aluno |
+| Frontend | React + Vite + TypeScript | Interface do quiz, home e telas do aluno |
 | Estilização | Tailwind CSS | Sistema de design consistente |
 | Banco de Dados | Firebase Firestore | Usuários, respostas e resultados |
 | Autenticação | Firebase Authentication | Login, cadastro, recuperação de senha e controle de perfis |
 | Hospedagem | Firebase Hosting | Deploy do build React com CDN global |
 | Estado Global | React Context API | Sessão, usuário e progresso do quiz |
 
-> O projeto **não possui backend dedicado**. Toda a lógica reside no frontend React, com Firebase como camada de dados e autenticação via Firestore Security Rules.
+> O projeto **não possui backend dedicado**. Toda a lógica reside no frontend React, com Firebase como camada de dados e autenticação.
 
 ---
 
 ## 📁 Estrutura do Repositório
 
 ```
-oraculum-bb/
-├── frontend/                        # Aplicação React + Vite
+Oraculum-BB-Squad04/
+├── frontend/                        # Aplicação React + Vite + TypeScript
 │   ├── public/
 │   │   └── assets/                  # Ícones e imagens estáticas
 │   ├── src/
-│   │   ├── components/              # Componentes reutilizáveis (Button, Card, Badge...)
-│   │   ├── pages/                   # Telas da aplicação
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── ForgotPassword.jsx
-│   │   │   ├── ResetPassword.jsx
-│   │   │   ├── Onboarding.jsx
-│   │   │   ├── Quiz.jsx
-│   │   │   ├── Result.jsx
-│   │   │   ├── Home.jsx
-│   │   │   └── Dashboard.jsx        # Exclusivo para o perfil gestor
-│   │   ├── context/                 # React Context (AuthContext, QuizContext)
-│   │   ├── hooks/                   # Hooks customizados (useAuth, useQuiz...)
+│   │   ├── components/              # Componentes reutilizáveis
+│   │   │   ├── EmployeeDashboard.tsx  # Dashboard do aluno/funcionário
+│   │   │   ├── ManagerDashboard.tsx   # Dashboard exclusivo do gestor
+│   │   │   ├── LevelingOnboarding.tsx # Tela de introdução ao quiz
+│   │   │   ├── QuizView.tsx           # Motor do quiz com nivelamento A/B
+│   │   │   └── Result.tsx             # Tela de resultado com nível e temas
+│   │   ├── pages/                   # Telas com rota própria
+│   │   │   ├── Login.tsx
+│   │   │   ├── Register.tsx
+│   │   │   ├── ForgotPassword.tsx
+│   │   │   ├── ResetPassword.tsx
+│   │   │   └── Dashboard.tsx        # Roteador de perfil (aluno/gestor)
+│   │   ├── context/
+│   │   │   └── AuthContext.tsx      # Autenticação e estado global do usuário
 │   │   ├── services/
-│   │   │   └── firebase.js          # Inicialização do Firebase SDK
-│   │   ├── utils/                   # Funções auxiliares (classifyLevel, formatScore...)
-│   │   ├── App.jsx                  # Roteamento principal (React Router)
-│   │   └── main.jsx
-│   ├── .env                         # Variáveis de ambiente (chaves Firebase) — NÃO commitar
+│   │   │   └── firebase.ts          # Inicialização do Firebase SDK
+│   │   ├── App.tsx                  # Roteamento principal (React Router)
+│   │   └── main.tsx
+│   ├── .env                         # Variáveis de ambiente — NÃO commitar
 │   ├── firebase.json                # Configuração do Firebase Hosting
 │   └── package.json
 │
+├── CONTRIBUTING.md                  # Guia de contribuição do squad
 └── README.md
 ```
 
 ---
 
-## 👥 Membros do Squad e Divisão de Tarefas
+## 🗄️ Coleções do Firestore
 
-A divisão segue os épicos e histórias de usuário definidos no backlog do projeto. Cada membro é responsável pelas tasks listadas abaixo — o status reflete o progresso registrado no Notion.
+| Coleção | Dados armazenados |
+|---|---|
+| `users` | Nome, e-mail, role (aluno/gestor), level, leveling_completed |
+| `perguntas/{nivel}_{fase}/questoes` | Enunciado, alternativas, resposta correta, explicação, categoria |
+| `quiz_attempts` | user_id, score, total_questions, wrong_by_category, completed_at |
+| `bonus_questions` | Questões falsas para sorteio aleatório (implementação futura) |
+| `bonus_attempts` | Respostas da questão bônus: esperou, acertou, nivel_bonus (implementação futura) |
+
+---
+
+## 👥 Membros do Squad e Divisão de Tarefas
 
 ---
 
@@ -109,13 +116,10 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 | Task | Status |
 |---|---|
-| Criar tela de cadastro com validação de campos no frontend | ✅ Concluído |
-| Validar unicidade de e-mail via Firebase Authentication | ✅ Concluído |
-| Usar Firebase Auth SDK para criar o usuário (`createUserWithEmailAndPassword`) | ✅ Concluído |
+| Criar tela de cadastro com validação de campos | ✅ Concluído |
+| Integrar com Firebase Auth (`createUserWithEmailAndPassword`) | ✅ Concluído |
+| Criar documento do usuário no Firestore após registro | ✅ Concluído |
 | Redirecionar para home após cadastro bem-sucedido | ✅ Concluído |
-| Exibir mensagem de boas-vindas no primeiro acesso | ✅ Concluído |
-
----
 
 #### US02 · Login de usuário existente
 **Responsáveis: Jean Silva & João Santino**
@@ -123,12 +127,9 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Task | Status |
 |---|---|
 | Criar tela de login com validação de campos | ✅ Concluído |
-| Usar Firebase Auth SDK para login (`signInWithEmailAndPassword`) | ✅ Concluído |
-| Verificar custom claim de perfil (aluno/gestor) após login | 🟡 Em Andamento |
-| Redirecionar aluno para home e gestor para dashboard com base no perfil | 🟡 Em Andamento |
-| Exibir botão "Esqueci minha senha" na tela de login | ✅ Concluído |
-
----
+| Integrar com Firebase Auth (`signInWithEmailAndPassword`) | ✅ Concluído |
+| Redirecionar aluno ou gestor com base no campo `role` do Firestore | ✅ Concluído |
+| Exibir botão "Esqueci minha senha" | ✅ Concluído |
 
 #### US03 · Solicitar recuperação de senha
 **Responsáveis: Felipe Bento & João Guilherme**
@@ -138,9 +139,6 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 | Criar tela de recuperação de senha | ✅ Concluído |
 | Integrar com Firebase Auth (`sendPasswordResetEmail`) | ✅ Concluído |
 | Criar feedback visual de sucesso/erro | ✅ Concluído |
-| Validar campo de e-mail no frontend | ✅ Concluído |
-
----
 
 #### US04 · Redefinir senha
 **Responsáveis: Felipe Bento & João Guilherme**
@@ -149,10 +147,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 |---|---|
 | Criar tela de redefinição de senha | ✅ Concluído |
 | Integrar com Firebase Auth (reset via link) | ✅ Concluído |
-| Validar token de redefinição | ✅ Concluído |
-| Implementar validação de senha no frontend | ✅ Concluído |
 | Redirecionar para login após sucesso | ✅ Concluído |
-| Exibir mensagem de erro para link inválido/expirado | 🟡 Em Andamento |
 
 ---
 
@@ -163,39 +158,30 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 | Task | Status |
 |---|---|
-| Criar tela de onboarding | ✅ Concluído |
-| Criar componentes informativos (cards de benefícios) | ✅ Concluído |
+| Criar tela de onboarding (`LevelingOnboarding.tsx`) | ✅ Concluído |
 | Integrar navegação para início do quiz | ✅ Concluído |
-| Botão único "Começar Quiz" — usuário só avança ao clicar | ✅ Concluído |
-
----
 
 #### US06 · Iniciar e responder o quiz
 **Responsáveis: Kennedy Veras & João Paulo Dias**
 
 | Task | Status |
 |---|---|
-| Criar tela de pergunta com componente de múltipla escolha | ✅ Concluído |
-| Exibir barra ou contador de progresso | ✅ Concluído |
-| Armazenar respostas localmente durante o quiz (React state) | ✅ Concluído |
-| Buscar questões diretamente do Firestore (coleção `questions`) | ✅ Concluído |
-| Salvar respostas no Firestore ao finalizar o quiz | ✅ Concluído |
-| Exibir confirmação ao sair; salvar estado parcial no localStorage | ✅ Concluído |
-| Exibir banner de aviso em caso de perda de conexão durante o quiz | ✅ Concluído |
-| Garantir mínimo de 10 questões por nível antes do lançamento | ✅ Concluído |
-| Exibir aviso ao usuário caso respostas sejam submetidas em velocidade suspeita | ✅ Concluído |
+| Criar motor do quiz com lógica de nivelamento A/B | ✅ Concluído |
+| Buscar questões do Firestore (`perguntas/{nivel}_{fase}/questoes`) | ✅ Concluído |
+| Exibir barra de progresso por fase | ✅ Concluído |
+| Salvar resultado em `quiz_attempts` com `wrong_by_category` | ✅ Concluído |
+| Exibir aviso de conexão offline | ✅ Concluído |
+| Exibir aviso de velocidade suspeita | ✅ Concluído |
+| Confirmação ao tentar sair durante o quiz | ✅ Concluído |
 
----
-
-#### US07 · Receber feedback ao errar uma questão
+#### US07 · Receber feedback ao responder uma questão
 **Responsáveis: Kennedy Veras, João Paulo Dias & Ivan Roberto**
 
 | Task | Status |
 |---|---|
-| Criar componente de feedback de questão (certo/errado + explicação) | ✅ Concluído |
-| Incluir campo `explicação` no modelo de dados das perguntas | ✅ Concluído |
-| Exibir resumo de acertos/erros por questão na tela de resultado | ✅ Concluído |
-| Diferenciar visualmente respostas certas e erradas (cores e ícones) | ✅ Concluído |
+| Destacar visualmente resposta correta e incorreta (cores + ícones) | ✅ Concluído |
+| Exibir explicação após cada resposta | ✅ Concluído |
+| Registrar erros por categoria (`wrong_by_category`) | ✅ Concluído |
 
 ---
 
@@ -206,44 +192,41 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 
 | Task | Status |
 |---|---|
-| Criar lógica de classificação (Nivelamento A/B) | ✅ Concluído |
-| Criar tela de resultado com exibição do nível e breakdown por tema | ✅ Concluído |
-| Salvar resultado no Firestore (coleção `quiz_results`) via SDK client-side | ✅ Concluído |
-| Criar componente visual de nível (badge/ícone por classificação) | ✅ Concluído |
-| Exibir sugestões de melhoria associadas a cada tema | ✅ Concluído |
-| Organizar temas por prioridade (maior número de erros primeiro) | ✅ Concluído |
-| Resultado salvo no histórico do usuário automaticamente | ✅ Concluído |
+| Criar tela de resultado (`Result.tsx`) | ✅ Concluído |
+| Exibir nível classificado buscado do Firestore (`users/{uid}`) | ✅ Concluído |
+| Exibir temas com mais erros ordenados por frequência | ✅ Concluído |
+| Exibir temas na home do funcionário (`EmployeeDashboard.tsx`) | ✅ Concluído |
 
 ---
 
 ### EP04 — Dashboard do Gestor
 
-#### US09 · Visualizar painel consolidado de todos os usuários
+#### US09 · Visualizar painel consolidado
 **Responsáveis: Laiza Maria & Luís Bezerra**
 
 | Task | Status |
 |---|---|
-| Criar tela de dashboard exclusiva para o perfil gestor | ✅ Concluído |
-| Buscar dados agregados via Firestore (`onSnapshot()` para tempo real) | ✅ Concluído |
-| Criar componentes de gráfico (distribuição de níveis, temas críticos) | ✅ Concluído |
-| Verificar custom claim de gestor via Firebase Auth antes de exibir o dashboard | ✅ Concluído |
-| Criar aba com lista de funcionários e seus desempenhos individuais | ✅ Concluído |
+| Criar dashboard do gestor (`ManagerDashboard.tsx`) | ✅ Concluído |
+| Exibir total de funcionários, quizzes e acerto médio | ✅ Concluído |
+| Gráfico de distribuição por nível (Júnior, Pleno, Sênior) | ✅ Concluído |
+| Aba de funcionários com busca e expansão individual | ✅ Concluído |
+| Exibir temas com mais erros por funcionário | ✅ Concluído |
+| Seção "Assuntos com Maior Dificuldade" na visão geral | ✅ Concluído |
+| Exportar relatório em CSV | ✅ Concluído |
 
 ---
 
-### EP05 — Acessibilidade e UX
+### EP05 — UX / Home do Usuário
 
-#### US10 · Visualizar home do aluno/funcionário
+#### US10 · Visualizar home do aluno
 **Responsáveis: Laiza Maria & Luís Bezerra**
 
 | Task | Status |
 |---|---|
-| Criar tela Home do usuário | ✅ Concluído |
-| Integrar com dados do Firestore (resultado do quiz) | ✅ Concluído |
-| Criar componente de lista de melhorias | ✅ Concluído |
-| Criar barra de progresso | ✅ Concluído |
-| Listar principais pontos de melhoria com descrição | ✅ Concluído |
-| Layout responsivo e organizado em cards | ✅ Concluído |
+| Criar dashboard do funcionário (`EmployeeDashboard.tsx`) | ✅ Concluído |
+| Exibir nome, nível e barra de progresso | ✅ Concluído |
+| Exibir status do quiz (pendente/finalizado) | ✅ Concluído |
+| Exibir temas para revisar após o quiz | ✅ Concluído |
 
 ---
 
@@ -252,7 +235,7 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 ### Pré-requisitos
 
 - Node.js 18+
-- npm ou yarn
+- npm
 - Conta no Firebase (projeto configurado)
 
 ### Instalação
@@ -260,50 +243,31 @@ A divisão segue os épicos e histórias de usuário definidos no backlog do pro
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/laizalay/Oraculum-BB-Squad04.git
-cd oraculum-bb/frontend
 
-# 2. Instale as dependências
+# 2. Entre na pasta do frontend
+cd Oraculum-BB-Squad04/frontend
+
+# 3. Instale as dependências
 npm install
 
-# 3. Configure as variáveis de ambiente (veja seção abaixo)
-cp .env.example .env
+# 4. Configure as variáveis de ambiente (veja seção abaixo)
+# Crie um arquivo .env na pasta frontend
 
-# 4. Rode o projeto em desenvolvimento
+# 5. Rode o projeto
 npm run dev
 ```
 
 O projeto estará disponível em `http://localhost:5173`.
 
-### Build para produção
-
-```bash
-npm run build
-```
-
 ---
 
 ## 🔥 Configuração do Firebase
 
-O projeto usa Firebase como única camada de backend. Antes de rodar, é necessário ter um projeto Firebase configurado com:
+O projeto usa Firebase como única camada de backend. Configure:
 
 - **Authentication** — método Email/Senha habilitado
 - **Firestore Database** — criado no modo de produção
 - **Hosting** — configurado para deploy do build React
-
-### Coleções do Firestore
-
-| Coleção | Dados |
-|---|---|
-| `users` | Perfil do usuário: nome, e-mail, perfil (aluno/gestor), nível atual |
-| `questions` | Enunciado, alternativas, resposta correta, explicação, nível e categoria |
-| `quiz_results` | userId, data, score geral, score por categoria, nível classificado |
-
-### Firestore Security Rules
-
-As regras de segurança garantem que:
-- Alunos leem e escrevem **apenas seus próprios dados**
-- Gestores têm acesso de leitura a **todos os dados**
-- O papel do usuário (aluno/gestor) é definido via **custom claims** no token Firebase
 
 ---
 
@@ -324,17 +288,15 @@ VITE_FIREBASE_APP_ID=seu_app_id
 
 ## 📊 Status do Projeto
 
-**Entrega Parcial** — prazo 27/04/2026
-
-| Épico | US | Responsáveis | Status Geral |
+| Épico | US | Responsáveis | Status |
 |---|---|---|---|
-| EP01 — Autenticação | US01, US02 | Jean, João Santino | 🟡 Em Andamento |
-| EP01 — Autenticação | US03, US04 | Felipe, João Guilherme | 🟡 Em Andamento |
-| EP02 — Motor de Quiz | US05 | João Paulo, Ivan | 🟡 Em Andamento |
+| EP01 — Autenticação | US01, US02 | Jean, João Santino | ✅ Concluído |
+| EP01 — Autenticação | US03, US04 | Felipe, João Guilherme | ✅ Concluído |
+| EP02 — Motor de Quiz | US05 | João Paulo, Ivan | ✅ Concluído |
 | EP02 — Motor de Quiz | US06, US07 | Kennedy, João Paulo, Ivan | ✅ Concluído |
-| EP03 — Resultado | US08 | Laiza, Kennedy | 🟡 Em Andamento |
-| EP04 — Dashboard | US09 | Laiza, Luís Bezerra | ⚪ Não Iniciado |
-| EP05 — UX / Home | US10 | Laiza, Luís Bezerra | ⚪ Não Iniciado |
+| EP03 — Resultado | US08 | Laiza, Kennedy | ✅ Concluído |
+| EP04 — Dashboard | US09 | Laiza, Luís Bezerra | ✅ Concluído |
+| EP05 — UX / Home | US10 | Laiza, Luís Bezerra | ✅ Concluído |
 
 **Legenda:** ✅ Concluído · 🟡 Em Andamento · ⚪ Não Iniciado
 
