@@ -124,6 +124,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
         score,
         total_questions: questions.length,
         completed_at: new Date().toISOString(),
+        wrong_by_category: wrongByCategory,
       });
       await updateDoc(doc(db, "users", user.uid), {
         level: res.classificacao.toLowerCase(),
