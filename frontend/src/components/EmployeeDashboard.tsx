@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { doc, getDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { useAuth } from "../context/AuthContext";
-import { Shield, LogOut, CheckCircle2 } from "lucide-react";
 import QuizView from "./QuizView";
 import LevelingOnboarding from "./LevelingOnboarding";
 import Result from "./Result";
+import { doc, getDoc, collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
+import { Shield, LogOut, CheckCircle2, AlertTriangle } from "lucide-react";
 
 const levelConfig: Record<string, { label: string; color: string }> = {
   junior: { label: "Júnior", color: "bg-yellow-400" },
@@ -24,7 +24,7 @@ export default function EmployeeDashboard() {
   const { user, logout } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [activeTab, setActiveTab] = useState<"home" | "quiz" | "leveling_intro" | "result">("home");
-  const [quizAttempts, setQuizAttempts] = useState(0);
+  const [wrongCategories, setWrongCategories] = useState<{name: string; count: number}[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
@@ -52,10 +52,18 @@ export default function EmployeeDashboard() {
       } else {
         setLoadError(true);
       }
-      const attemptsSnap = await getDocs(query(collection(db, "quiz_attempts"), where("user_id", "==", user.uid)));
-      setQuizAttempts(attemptsSnap.size);
+      const q = query(collection(db, "quiz_attempts"), where("user_id", "==", user.uid), orderBy("completed_at", "desc"), limit(1));
+      const lastAttempt = await getDocs(q);
+      if (!lastAttempt.empty) {
+        const wrongByCategory = lastAttempt.docs[0].data().wrong_by_category ?? {};
+        const list = Object.entries(wrongByCategory)
+          .map(([name, count]) => ({ name, count: count as number }))
+          .sort((a, b) => b.count - a.count);
+        setWrongCategories(list);
+      }
     } catch {
       setLoadError(true);
+      
     } finally {
       setLoading(false);
     }
@@ -197,10 +205,26 @@ export default function EmployeeDashboard() {
             </>
           )}
         </div>
+        
+              {quizCompleted && wrongCategories.length > 0 && (
+          <div className="bg-white rounded-xl p-4 shadow-sm">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="w-4 h-4 text-red-500" />
+              <h3 className="font-semibold text-gray-800 text-sm">Temas para revisar</h3>
+            </div>
+            <div className="space-y-2">
+              {wrongCategories.map((item, i) => (
+                <div key={i} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                  <span className="text-sm text-gray-800">{item.name}</span>
+                  <span className="text-xs font-medium text-red-500">
+                    {item.count} {item.count === 1 ? "erro" : "erros"}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-        <div className="bg-white rounded-xl p-4 shadow-sm text-center text-sm text-gray-500">
-          {quizAttempts} quiz(zes) realizado(s)
-        </div>
       </div>
     </div>
   );

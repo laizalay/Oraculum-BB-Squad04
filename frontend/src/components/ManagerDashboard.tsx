@@ -20,6 +20,8 @@ interface AttemptData {
   user_id: string;
   score: number;
   total_questions: number;
+  wrong_by_category?: Record<string, number>;
+  completed_at?: string;
 }
 
 const COLORS = ["#f59e0b", "#3b82f6", "#10b981"];
@@ -141,6 +143,40 @@ export default function ManagerDashboard() {
                   </ResponsiveContainer>
                 </div>
 
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <TrendingDown className="w-4 h-4 text-red-500" />
+                    <h3 className="text-sm font-semibold text-gray-800">Assuntos com Maior Dificuldade</h3>
+                  </div>
+                  {(() => {
+                    const allWrong: Record<string, number> = {};
+                    attempts.forEach((a: any) => {
+                      const wrong = a.wrong_by_category ?? {};
+                      Object.entries(wrong).forEach(([cat, count]) => {
+                        allWrong[cat] = (allWrong[cat] ?? 0) + (count as number);
+                      });
+                    });
+                    const list = Object.entries(allWrong)
+                      .map(([name, count]) => ({ name, count }))
+                      .sort((a, b) => b.count - a.count)
+                      .slice(0, 5);
+                    return list.length > 0 ? (
+                      <div className="space-y-2">
+                        {list.map((item, i) => (
+                          <div key={i} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
+                            <span className="text-sm text-gray-800">{item.name}</span>
+                            <span className="text-xs font-medium text-red-500">
+                              {item.count} {item.count === 1 ? "erro" : "erros"}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-400 text-center">Nenhum dado de respostas disponível ainda</p>
+                    );
+                  })()}
+                </div>
+
                 <button onClick={exportCSV}
                   className="w-full flex items-center justify-center gap-2 py-3 border-2 border-[#1F3864] text-[#1F3864] font-semibold rounded-xl hover:bg-[#1F3864] hover:text-white transition">
                   <Download className="w-4 h-4" /> Exportar CSV
@@ -180,7 +216,7 @@ export default function ManagerDashboard() {
                             </div>
                             <div className="flex-1 min-w-0">
                               <p className="font-medium text-gray-800 text-sm truncate">{displayName}</p>
-                              <p className="text-xs text-gray-500">{empAvg}% acerto</p>
+                              <p className="text-xs text-gray-500">{empAvg}% Acerto médio</p>
                             </div>
                             <span className="text-xs px-2 py-0.5 rounded-full font-medium text-white bg-blue-500">
                               {levelLabels[emp.level] ?? emp.level ?? "Júnior"}
@@ -188,10 +224,28 @@ export default function ManagerDashboard() {
                             {isExpanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
                           </button>
                           {isExpanded && (
-                            <div className="px-4 pb-4 bg-gray-50">
+                            <div className="px-4 pb-4 bg-gray-50 space-y-2">
                               <p className="text-xs text-gray-500 pt-2">
-                                {empAttempts.length === 0 ? "Funcionário ainda não realizou o quiz." : `${empAttempts.length} quiz(zes) realizado(s). Acerto médio: ${empAvg}%`}
+                                {empAttempts.length === 0 ? "Funcionário ainda não realizou o quiz." : `Acerto médio: ${empAvg}%`}
                               </p>
+                              {(() => {
+                                const lastAttempt = empAttempts[empAttempts.length - 1] as any;
+                                const wrongByCategory = lastAttempt?.wrong_by_category ?? {};
+                                const list = Object.entries(wrongByCategory)
+                                  .map(([name, count]) => ({ name, count: count as number }))
+                                  .sort((a, b) => b.count - a.count);
+                                return list.length > 0 ? (
+                                  <div className="mt-2">
+                                    <p className="text-xs font-semibold text-gray-600 mb-1">Temas com mais erros:</p>
+                                    {list.map((item, i) => (
+                                      <div key={i} className="flex justify-between text-xs text-gray-500 py-0.5">
+                                        <span>{item.name}</span>
+                                        <span className="text-red-500">{item.count} {item.count === 1 ? "erro" : "erros"}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : null;
+                              })()}
                             </div>
                           )}
                         </div>
