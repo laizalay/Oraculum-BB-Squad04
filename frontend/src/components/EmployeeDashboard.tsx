@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { Shield, LogOut, CheckCircle2 } from "lucide-react";
 import QuizView from "./QuizView";
 import LevelingOnboarding from "./LevelingOnboarding";
+import Result from "./Result";
 
 const levelConfig: Record<string, { label: string; color: string }> = {
   junior: { label: "Júnior", color: "bg-yellow-400" },
@@ -22,7 +23,7 @@ interface Profile {
 export default function EmployeeDashboard() {
   const { user, logout } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
-  const [activeTab, setActiveTab] = useState<"home" | "quiz" | "leveling_intro">("home");
+  const [activeTab, setActiveTab] = useState<"home" | "quiz" | "leveling_intro" | "result">("home");
   const [quizAttempts, setQuizAttempts] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
@@ -115,7 +116,8 @@ export default function EmployeeDashboard() {
   }
 
   if (activeTab === "leveling_intro") return <LevelingOnboarding onStart={() => setActiveTab("quiz")} userName={profile?.name || profile?.full_name || user?.displayName || undefined} />;
-  if (activeTab === "quiz") return <QuizView onBack={async () => { setActiveTab("home"); await loadData(); }} />;
+  if (activeTab === "quiz") return <QuizView onBack={() => setActiveTab("result")} />;
+  if (activeTab === "result") return <Result onHome={async () => { setActiveTab("home"); await loadData(); }} />;
 
   const level = profile?.level;
   const config = level ? levelConfig[level] : null;
