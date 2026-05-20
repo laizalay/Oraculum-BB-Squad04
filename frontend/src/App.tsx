@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import ResetPassword from "./pages/ResetPassword";
+import AuthAction from "./pages/AuthAction";
 
 function App() {
   const { user, loading } = useAuth();
@@ -31,6 +32,7 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+      <Route path="/auth/action" element={<AuthAction />} />
     </Routes>
   );
 }
