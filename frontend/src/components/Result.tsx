@@ -17,6 +17,7 @@ const NIVEL_LABELS: Record<string, string> = {
   junior: "Júnior",
   pleno: "Pleno",
   senior: "Sênior",
+  "senior+": "Sênior+",
 };
 
 export default function Result({ onHome }: ResultProps) {
