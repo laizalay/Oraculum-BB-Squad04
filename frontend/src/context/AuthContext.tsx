@@ -53,7 +53,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   async function login(email: string, password: string) {
-    await signInWithEmailAndPassword(auth, email, password);
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    if (!credential.user.emailVerified) {
+      await signOut(auth);
+      throw new Error("Por favor, verifique seu e-mail antes de fazer login.");
+    }
   }
 
   async function logout() {
@@ -74,4 +78,3 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
-
