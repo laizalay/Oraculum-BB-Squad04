@@ -64,10 +64,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await signOut(auth);
   }
 
- async function resetPassword(email: string) {
-  await sendPasswordResetEmail(auth, email, {
-    url: "https://oraculum-bb-squad04.vercel.app/login",
-  });
+async function resetPassword(email: string) {
+  await sendPasswordResetEmail(auth, email);
 }
   
   return (
