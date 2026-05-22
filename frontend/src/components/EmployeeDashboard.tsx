@@ -39,7 +39,6 @@ export default function EmployeeDashboard() {
         const prof = profileSnap.data() as Profile;
         setProfile(prof);
 
-        // Boas-vindas só no primeiro acesso — usa localStorage para não repetir
         if (!prof.leveling_completed) {
           const welcomeKey = `welcome_shown_${user.uid}`;
           const alreadyShown = localStorage.getItem(welcomeKey);
@@ -64,7 +63,6 @@ export default function EmployeeDashboard() {
       }
     } catch {
       setLoadError(true);
-      
     } finally {
       setLoading(false);
     }
@@ -80,7 +78,6 @@ export default function EmployeeDashboard() {
     );
   }
 
-  // Tela de erro
   if (loadError) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
@@ -98,7 +95,6 @@ export default function EmployeeDashboard() {
     );
   }
 
-  // Modal de boas-vindas — apenas no primeiro acesso
   if (showWelcome) {
     const displayName = profile?.name || profile?.full_name || user?.displayName || "Usuário";
     return (
@@ -206,8 +202,8 @@ export default function EmployeeDashboard() {
             </>
           )}
         </div>
-        
-              {quizCompleted && wrongCategories.length > 0 && (
+
+        {quizCompleted && wrongCategories.length > 0 && (
           <div className="bg-white rounded-xl p-4 shadow-sm">
             <div className="flex items-center gap-2 mb-3">
               <AlertTriangle className="w-4 h-4 text-red-500" />
@@ -225,7 +221,6 @@ export default function EmployeeDashboard() {
             </div>
           </div>
         )}
-
       </div>
     </div>
   );

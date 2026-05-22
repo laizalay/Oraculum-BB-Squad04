@@ -24,8 +24,10 @@ interface AttemptData {
   completed_at?: string;
 }
 
-const COLORS = ["#f59e0b", "#3b82f6", "#10b981"];
-const levelLabels: Record<string, string> = { junior: "Júnior", pleno: "Pleno", senior: "Sênior" };
+const COLORS = ["#f59e0b", "#3b82f6", "#10b981", "#34d399"];
+const levelLabels: Record<string, string> = {
+  junior: "Júnior", pleno: "Pleno", senior: "Sênior", "senior+": "Sênior+",
+};
 
 export default function ManagerDashboard() {
   const { logout } = useAuth();
@@ -35,6 +37,9 @@ export default function ManagerDashboard() {
   const [activeTab, setActiveTab] = useState<"overview" | "employees">("overview");
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedEmployee, setExpandedEmployee] = useState<string | null>(null);
+  const [filterLevel, setFilterLevel] = useState("todos");
+  const [filterStatus, setFilterStatus] = useState("todos");
+  const [sortBy, setSortBy] = useState("nome");
 
   useEffect(() => {
     const loadData = async () => {
@@ -53,10 +58,9 @@ export default function ManagerDashboard() {
     loadData();
   }, []);
 
-  const levelDistribution = ["junior", "pleno", "senior"].map(level => ({
-    name: levelLabels[level],
-    value: employees.filter(e => e.level === level).length,
-  }));
+  const levelDistribution = ["junior", "pleno", "senior", "senior+"]
+    .map(level => ({ name: levelLabels[level], value: employees.filter(e => e.level === level).length }))
+    .filter(item => item.value > 0);
 
   const avgScore = attempts.length > 0
     ? Math.round(attempts.reduce((sum, a) => sum + (a.total_questions > 0 ? (a.score / a.total_questions) * 100 : 0), 0) / attempts.length)
@@ -65,6 +69,22 @@ export default function ManagerDashboard() {
   const filteredEmployees = employees.filter(e =>
     (e.name ?? e.full_name ?? "").toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const finalEmployees = filteredEmployees
+    .filter(e => filterLevel === "todos" || e.level === filterLevel)
+    .filter(e => filterStatus === "todos" || (filterStatus === "concluido" ? e.leveling_completed : !e.leveling_completed))
+    .sort((a, b) => {
+      const avgA = attempts.filter(x => x.user_id === a.user_id).reduce((s, x) => s + (x.total_questions > 0 ? (x.score / x.total_questions) * 100 : 0), 0) / Math.max(attempts.filter(x => x.user_id === a.user_id).length, 1);
+      const avgB = attempts.filter(x => x.user_id === b.user_id).reduce((s, x) => s + (x.total_questions > 0 ? (x.score / x.total_questions) * 100 : 0), 0) / Math.max(attempts.filter(x => x.user_id === b.user_id).length, 1);
+      if (sortBy === "nome") return (a.name ?? a.full_name ?? "").localeCompare(b.name ?? b.full_name ?? "");
+      if (sortBy === "acerto_maior") return avgB - avgA;
+      if (sortBy === "acerto_menor") return avgA - avgB;
+      if (sortBy === "nivel") {
+        const ordem: Record<string, number> = { "senior+": 0, senior: 1, pleno: 2, junior: 3 };
+        return (ordem[a.level ?? ""] ?? 4) - (ordem[b.level ?? ""] ?? 4);
+      }
+      return 0;
+    });
 
   const exportCSV = () => {
     const headers = "Nome,Nível\n";
@@ -134,13 +154,20 @@ export default function ManagerDashboard() {
                   <h3 className="text-sm font-semibold text-gray-800 mb-4">Distribuição por Nível</h3>
                   <ResponsiveContainer width="100%" height={200}>
                     <PieChart>
-                      <Pie data={levelDistribution} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value"
-                        label={({ name, value }) => `${name}: ${value}`}>
-                        {levelDistribution.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+                      <Pie data={levelDistribution} cx="50%" cy="50%" innerRadius={50} outerRadius={80} dataKey="value">
+                        {levelDistribution.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                       </Pie>
                       <Tooltip />
                     </PieChart>
                   </ResponsiveContainer>
+                  <div className="flex flex-wrap justify-center gap-3 mt-3">
+                    {levelDistribution.map((item, i) => (
+                      <div key={i} className="flex items-center gap-1.5">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
+                        <span className="text-xs text-gray-600">{item.name}: {item.value}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="bg-white rounded-2xl shadow-lg p-6">
@@ -193,14 +220,50 @@ export default function ManagerDashboard() {
                     className="w-full bg-white rounded-xl pl-10 pr-4 py-3 text-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1F3864]/50" />
                 </div>
 
+                <div className="bg-white rounded-xl p-4 shadow-sm space-y-3">
+                  <div>
+                    <p className="text-xs font-semibold text-gray-500 mb-2">Nível</p>
+                    <div className="flex flex-wrap gap-2">
+                      {["todos", "junior", "pleno", "senior", "senior+"].map(lvl => (
+                        <button key={lvl} onClick={() => setFilterLevel(lvl)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium transition ${filterLevel === lvl ? "bg-[#1F3864] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+                          {lvl === "todos" ? "Todos" : levelLabels[lvl] ?? lvl}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-500 mb-2">Status do Quiz</p>
+                    <div className="flex gap-2">
+                      {[{value: "todos", label: "Todos"}, {value: "concluido", label: "Concluído"}, {value: "pendente", label: "Pendente"}].map(s => (
+                        <button key={s.value} onClick={() => setFilterStatus(s.value)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium transition ${filterStatus === s.value ? "bg-[#1F3864] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-500 mb-2">Ordenar por</p>
+                    <div className="flex flex-wrap gap-2">
+                      {[{value: "nome", label: "Nome A-Z"}, {value: "acerto_maior", label: "Maior acerto"}, {value: "acerto_menor", label: "Menor acerto"}, {value: "nivel", label: "Nível"}].map(s => (
+                        <button key={s.value} onClick={() => setSortBy(s.value)}
+                          className={`px-3 py-1 rounded-full text-xs font-medium transition ${sortBy === s.value ? "bg-[#1F3864] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                   <div className="p-4 border-b border-gray-100">
-                    <h3 className="font-semibold text-gray-800">{filteredEmployees.length} Funcionários</h3>
+                    <h3 className="font-semibold text-gray-800">{finalEmployees.length} Funcionários</h3>
                   </div>
                   <div className="divide-y divide-gray-100">
-                    {filteredEmployees.length === 0 ? (
+                    {finalEmployees.length === 0 ? (
                       <div className="p-8 text-center text-gray-500 text-sm">Nenhum funcionário encontrado</div>
-                    ) : filteredEmployees.map(emp => {
+                    ) : finalEmployees.map(emp => {
                       const empAttempts = attempts.filter(a => a.user_id === emp.user_id);
                       const empAvg = empAttempts.length > 0
                         ? Math.round(empAttempts.reduce((s, a) => s + (a.total_questions > 0 ? (a.score / a.total_questions) * 100 : 0), 0) / empAttempts.length)
@@ -228,6 +291,11 @@ export default function ManagerDashboard() {
                               <p className="text-xs text-gray-500 pt-2">
                                 {empAttempts.length === 0 ? "Funcionário ainda não realizou o quiz." : `Acerto médio: ${empAvg}%`}
                               </p>
+                              {emp.level?.endsWith("+") && (
+                                <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-bold text-white bg-yellow-500">
+                                  ⭐ Nível+
+                                </span>
+                              )}
                               {(() => {
                                 const lastAttempt = empAttempts[empAttempts.length - 1] as any;
                                 const wrongByCategory = lastAttempt?.wrong_by_category ?? {};
@@ -260,4 +328,4 @@ export default function ManagerDashboard() {
       </div>
     </div>
   );
-      }
+}

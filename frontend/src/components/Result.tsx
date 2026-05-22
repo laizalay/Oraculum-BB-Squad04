@@ -17,6 +17,7 @@ const NIVEL_LABELS: Record<string, string> = {
   junior: "Júnior",
   pleno: "Pleno",
   senior: "Sênior",
+  "senior+": "Sênior+",
 };
 
 export default function Result({ onHome }: ResultProps) {
@@ -71,19 +72,16 @@ export default function Result({ onHome }: ResultProps) {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-full">
 
-        {/* Ícone */}
         <div className="flex justify-center mb-4">
           <div className="w-20 h-20 rounded-full bg-[#F5C518] flex items-center justify-center">
             <Trophy className="w-10 h-10 text-[#1F3864]" />
           </div>
         </div>
 
-        {/* Título */}
         <h2 className="text-xl font-bold text-gray-800 text-center mb-4">
           Quiz Finalizado!
         </h2>
 
-        {/* Nível */}
         <div className="bg-gray-50 rounded-xl p-4 text-center mb-6">
           <p className="text-sm text-gray-500 mb-1">Seu nível:</p>
           <p className="text-2xl font-bold text-[#1F3864]">
@@ -91,7 +89,6 @@ export default function Result({ onHome }: ResultProps) {
           </p>
         </div>
 
-        {/* Temas para revisar */}
         {wrongCategories.length > 0 ? (
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
@@ -100,10 +97,7 @@ export default function Result({ onHome }: ResultProps) {
             </div>
             <div className="space-y-2">
               {wrongCategories.map((item, i) => (
-                <div
-                  key={i}
-                  className="flex items-center justify-between bg-gray-50 rounded-lg p-3"
-                >
+                <div key={i} className="flex items-center justify-between bg-gray-50 rounded-lg p-3">
                   <span className="text-sm text-gray-800">{item.name}</span>
                   <span className="text-xs font-medium text-red-500">
                     {item.count} {item.count === 1 ? "erro" : "erros"}
@@ -120,7 +114,6 @@ export default function Result({ onHome }: ResultProps) {
           </div>
         )}
 
-        {/* Botão */}
         <button
           onClick={onHome}
           className="w-full bg-[#F5C518] text-[#1F3864] font-bold py-3 rounded-lg hover:bg-yellow-400 transition"
