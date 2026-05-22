@@ -302,6 +302,17 @@ VITE_FIREBASE_APP_ID=seu_app_id
 
 ---
 
+## 📦 Entrega Final
+
+| Entrega | Responsável |
+|---|---|
+| Documentação do MVP | Kennedy Veras |
+| Apresentação (Slides) | Laiza Maria |
+| Apresentador do Pitch | Em decisão |
+| Drive com arquivos | [Acessar aqui](https://drive.google.com/drive/folders/1-D6OZ2OcvrVrcjw3uOatT1hiOmhH6FXR?usp=sharing) |
+
+
+
 <div align="center">
 
 Desenvolvido pelo **Squad 04** · Residência Rise Up 2026.1 · Porto Digital
