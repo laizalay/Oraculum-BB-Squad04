@@ -11,7 +11,6 @@ const levelConfig: Record<string, { label: string; color: string }> = {
   junior: { label: "Júnior", color: "bg-yellow-400" },
   pleno: { label: "Pleno", color: "bg-blue-500" },
   senior: { label: "Sênior", color: "bg-green-500" },
-  "senior+": { label: "Sênior+", color: "bg-green-600" },
 };
 
 interface Profile {
