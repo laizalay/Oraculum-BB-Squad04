@@ -19,7 +19,8 @@ export default function Login() {
     try {
       await login(email, password);
       navigate("/");
-    } catch {
+    } catch (err) {
+      console.error("Erro de login:", err);
       setError("E-mail ou senha incorretos. Tente novamente.");
       setPassword("");
     } finally {
