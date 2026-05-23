@@ -132,7 +132,7 @@ Oraculum-BB-Squad04/
 | Exibir botão "Esqueci minha senha" | ✅ Concluído |
 
 #### US03 · Solicitar recuperação de senha
-**Responsáveis: Felipe Bento & João Guilherme**
+**Responsáveis: José Felipe Bento & João Guilherme**
 
 | Task | Status |
 |---|---|
@@ -141,7 +141,7 @@ Oraculum-BB-Squad04/
 | Criar feedback visual de sucesso/erro | ✅ Concluído |
 
 #### US04 · Redefinir senha
-**Responsáveis: Felipe Bento & João Guilherme**
+**Responsáveis: José Felipe Bento & João Guilherme**
 
 | Task | Status |
 |---|---|
@@ -291,7 +291,7 @@ VITE_FIREBASE_APP_ID=seu_app_id
 | Épico | US | Responsáveis | Status |
 |---|---|---|---|
 | EP01 — Autenticação | US01, US02 | Jean, João Santino | ✅ Concluído |
-| EP01 — Autenticação | US03, US04 | Felipe, João Guilherme | ✅ Concluído |
+| EP01 — Autenticação | US03, US04 | José Felipe, João Guilherme | ✅ Concluído |
 | EP02 — Motor de Quiz | US05 | João Paulo, Ivan | ✅ Concluído |
 | EP02 — Motor de Quiz | US06, US07 | Kennedy, João Paulo, Ivan | ✅ Concluído |
 | EP03 — Resultado | US08 | Laiza, Kennedy | ✅ Concluído |
