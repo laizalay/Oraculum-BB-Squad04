@@ -50,7 +50,7 @@ A classificação é feita por uma lógica de nivelamento progressivo (fases A/B
 | Estilização | Tailwind CSS | Sistema de design consistente |
 | Banco de Dados | Firebase Firestore | Usuários, respostas e resultados |
 | Autenticação | Firebase Authentication | Login, cadastro, recuperação de senha e controle de perfis |
-| Hospedagem | Firebase Hosting | Deploy do build React com CDN global |
+| Hospedagem | Vercel | Deploy do build React com CDN global |
 | Estado Global | React Context API | Sessão, usuário e progresso do quiz |
 
 > O projeto **não possui backend dedicado**. Toda a lógica reside no frontend React, com Firebase como camada de dados e autenticação.
