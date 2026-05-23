@@ -308,7 +308,7 @@ VITE_FIREBASE_APP_ID=seu_app_id
 |---|---|
 | Documentação do MVP | Kennedy Veras |
 | Apresentação (Slides) | Laiza Maria |
-| Apresentador do Pitch | Em decisão |
+| Apresentador do Pitch | Luís Bezerra / João Guilherme |
 | Drive com arquivos | [Acessar aqui](https://drive.google.com/drive/folders/1-D6OZ2OcvrVrcjw3uOatT1hiOmhH6FXR?usp=sharing) |
 
 
