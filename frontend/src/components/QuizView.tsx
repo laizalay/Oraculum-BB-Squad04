@@ -86,6 +86,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [reportouAnomalia, setReportouAnomalia] = useState<boolean>(false);
   const [score, setScore] = useState<number>(savedProgress?.score ?? 0);
+  const [totalRespondidas, setTotalRespondidas] = useState<number>(savedProgress?.totalRespondidas ?? 0);
   const [wrongByCategory, setWrongByCategory] = useState<Record<string, number>>(savedProgress?.wrongByCategory ?? {});
 
   // ── Estados de UI ──────────────────────────────────────────
@@ -110,6 +111,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
       retornoSenior,
       caminhoPerfeito,
       score,
+      totalRespondidas,
       wrongByCategory,
     }));
   }, [nivelAtual, faseAtual, tentativasA, tentativasB, acertosASenior, retornoSenior, caminhoPerfeito, score, wrongByCategory, user]);
@@ -192,7 +194,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
         user_id: user.uid,
         quiz_type: "leveling",
         score,
-        total_questions: questions.length,
+        total_questions: totalRespondidas,
         completed_at: new Date().toISOString(),
         wrong_by_category: wrongByCategory,
       });
@@ -337,6 +339,7 @@ export default function QuizView({ onBack }: QuizViewProps) {
     lastAnswerTime.current = now;
 
     setSelectedOption(index);
+    setTotalRespondidas((t) => t + 1);
 
     if (faseAtual === "falsa" && questaoFalsa) {
       setFlashRed(true);
