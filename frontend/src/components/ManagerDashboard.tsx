@@ -89,7 +89,7 @@ export default function ManagerDashboard() {
   const exportCSV = () => {
     const headers = "Nome,Nível\n";
     const rows = employees.map(e => `"${e.name ?? e.full_name}","${levelLabels[e.level] ?? e.level}"`).join("\n");
-    const blob = new Blob([headers + rows], { type: "text/csv" });
+    const blob = new Blob(['\uFEFF' + headers + rows], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
